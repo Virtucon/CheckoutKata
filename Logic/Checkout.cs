@@ -57,6 +57,16 @@ namespace Logic
             return GetAppliedDiscount(_scannedProducts.Select(p => p.Price).Sum());
         }
 
+
+        /// <summary>
+        /// Algorithm explanation using example "A,A,A"
+        /// - Get distinct products -> {ProductId: A, Count: 3}
+        /// - Get discount object for product
+        /// - 3 / 3 == 1
+        /// - 150 -= (20 * 1) => 130
+        /// </summary>
+        /// <param name="total"></param>
+        /// <returns></returns>
         private int GetAppliedDiscount(int total)
         {
             var distinctProducts = _scannedProducts
