@@ -44,7 +44,7 @@ namespace Logic
 
         public int Total()
         {
-            throw new NotImplementedException();
+            return 0;
         }
     }
 
