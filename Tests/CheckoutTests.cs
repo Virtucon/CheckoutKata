@@ -79,5 +79,14 @@ namespace Tests
 
             Assert.Equal(expectedTotal, _checkout.Total());
         }
+
+        [Theory]
+        [InlineData("A,A,A,A,A,A", 260)]
+        public void ReturnsCorrectTotalForOneItemWithTwoDiscounts(string productId, int expectedTotal)
+        {
+            _checkout.Scan(productId);
+
+            Assert.Equal(expectedTotal, _checkout.Total());
+        }
     }
 }
