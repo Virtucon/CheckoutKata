@@ -41,18 +41,14 @@ namespace Logic
         {
             if (productIds.Contains(","))
             {
-                var productsIdList = productIds.Split(",").ToList();
-
-                foreach (var productId in productsIdList)
+                foreach (var productId in productIds.Split(",").ToList())
                 {
                     _scannedProducts.Add(_productsFromStore.SingleOrDefault(p => p.ProductId == productId));
                 }
             }
             else
             {
-                var product = _productsFromStore.SingleOrDefault(p => p.ProductId == productIds);
-
-                if (product is not null) _scannedProducts.Add(product);
+                _scannedProducts.Add(_productsFromStore.SingleOrDefault(p => p.ProductId == productIds));
             }
         }
 
