@@ -82,6 +82,7 @@ namespace Tests
 
         [Theory]
         [InlineData("A,A,A,A,A,A", 260)]
+        [InlineData("B,B,B,B,B,B", 135)]
         public void ReturnsCorrectTotalForOneItemWithTwoDiscounts(string productId, int expectedTotal)
         {
             _checkout.Scan(productId);
