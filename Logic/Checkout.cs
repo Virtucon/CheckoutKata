@@ -8,7 +8,7 @@ namespace Logic
 {
     public interface ICheckout
     {
-        void Scan(string productId);
+        void Scan(string productIds);
         int Total();
     }
     public interface IProduct
@@ -28,20 +28,32 @@ namespace Logic
     {
         private readonly List<IProduct> _productsFromStore;
         private readonly List<IDiscount> _discounts;
-        private readonly List<IProduct> _scannedProducts;
+        private readonly List<IProduct?> _scannedProducts;
 
         public Checkout(List<IProduct> products, List<IDiscount> discounts)
         {
             _productsFromStore = products;
             _discounts = discounts;
-            _scannedProducts = new List<IProduct>();
+            _scannedProducts = new List<IProduct?>();
         }
 
-        public void Scan(string productId)
+        public void Scan(string productIds)
         {
-            var product = _productsFromStore.SingleOrDefault(p => p.ProductId == productId);
+            if (productIds.Contains(","))
+            {
+                var productsIdList = productIds.Split(",").ToList();
 
-            if (product is not null) _scannedProducts.Add(product);
+                foreach (var productId in productsIdList)
+                {
+                    _scannedProducts.Add(_productsFromStore.SingleOrDefault(p => p.ProductId == productId));
+                }
+            }
+            else
+            {
+                var product = _productsFromStore.SingleOrDefault(p => p.ProductId == productIds);
+
+                if (product is not null) _scannedProducts.Add(product);
+            }
         }
 
         public int Total()
