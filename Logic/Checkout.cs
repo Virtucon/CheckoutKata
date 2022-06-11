@@ -39,12 +39,14 @@ namespace Logic
 
         public void Scan(string productId)
         {
-            throw new NotImplementedException();
+            var product = _productsFromStore.SingleOrDefault(p => p.ProductId == productId);
+
+            if (product is not null) _scannedProducts.Add(product);
         }
 
         public int Total()
         {
-            return 0;
+            return _scannedProducts.Select(p => p.Price).Sum();
         }
     }
 
