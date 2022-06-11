@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logic;
+using Xunit;
 
 namespace Tests
 {
@@ -28,6 +29,12 @@ namespace Tests
         public CheckoutTests()
         {
             _checkout = new Checkout(_products, _discounts);
+        }
+
+        [Fact]
+        public void ReturnsZeroGivenNoItems()
+        {
+            Assert.Equal(0, _checkout.Total());
         }
     }
 }
