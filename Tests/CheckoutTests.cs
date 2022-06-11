@@ -36,5 +36,16 @@ namespace Tests
         {
             Assert.Equal(0, _checkout.Total());
         }
+
+        [Theory]
+        [InlineData("A", 50)]
+        [InlineData("B", 30)]
+        [InlineData("C", 20)]
+        public void ReturnsCorrectTotalForOneItem(string productId, int expectedTotal)
+        {
+            _checkout.Scan(productId);
+
+            Assert.Equal(expectedTotal, _checkout.Total());
+        }
     }
 }
