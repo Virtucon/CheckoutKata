@@ -54,7 +54,31 @@ namespace Logic
 
         public int Total()
         {
-            return _scannedProducts.Select(p => p.Price).Sum();
+            return GetAppliedDiscount(_scannedProducts.Select(p => p.Price).Sum());
+        }
+
+        private int GetAppliedDiscount(int total)
+        {
+            var distinctProducts = _scannedProducts
+                .GroupBy(p => p.ProductId)
+                .Select(p => new
+                {
+                    ProductId = p.Key,
+                    Count = p.Select(s => s.ProductId).Count()
+                });
+
+            foreach (var product in distinctProducts)
+            {
+                var discount = _discounts.SingleOrDefault(d => d.ProductId == product.ProductId);
+
+                if (discount is null) continue;
+
+                var totalDiscounts = product.Count / discount.NumOfProducts;
+
+                if (totalDiscounts > 0) total -= (discount.Deduction * totalDiscounts);
+            }
+
+            return total;
         }
     }
 
